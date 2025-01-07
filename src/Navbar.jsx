@@ -1,7 +1,7 @@
 export const Navbar = () => {
   return (
     <nav>
-      <h2>navbar</h2>
+      <h2 style={{ color: "red" }}>navbar</h2>
       <ul>
         <li>aaa</li>
         <li>sdada</li>
