@@ -1,29 +1,52 @@
+import { useState } from "react";
+import { products } from "../../../products";
 import { ProductCard } from "../../common/productCard/ProductCard";
+import { useEffect } from "react";
 
 const ItemListContainer = () => {
+  // simular una peticion que me devuelva los productos
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    console.log("soy el effect");
+    const getProducts = new Promise((resolve, reject) => {
+      const isLogged = true;
+      if (isLogged) {
+        resolve(products);
+      } else {
+        reject({ statusCode: 400, message: "algo salio mal" });
+      }
+    });
+
+    getProducts
+      .then((response) => {
+        setItems(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
+  }, []);
+
+  console.log("no soy el effect");
   return (
     <div>
       <h2>Aca van los productos</h2>
-      <ProductCard
-        titulo="titulo 1"
-        precio="precio 1"
-        description="descripcion 1"
-      />
-      <ProductCard
-        titulo="titulo 2"
-        precio="precio 2"
-        description="descripcion 2"
-      />
-      <ProductCard
-        titulo="titulo 3"
-        precio="precio 3"
-        description="descripcion 3"
-      />
-      <ProductCard
-        titulo="titulo 4"
-        precio="precio 4"
-        description="descripcion 4"
-      />
+
+      {items.map((elemento) => {
+        return (
+          <ProductCard
+            key={elemento.id}
+            imageUrl={elemento.imageUrl}
+            title={elemento.title}
+            price={elemento.price}
+            description={elemento.description}
+            stock={elemento.stock}
+            category={elemento.category}
+            // {...elemento}
+          />
+        );
+      })}
     </div>
   );
 };

@@ -1,19 +1,16 @@
-export const ProductCard = (props) => {
-  console.log(props);
-
+import { Button } from "@mui/material";
+export const ProductCard = ({ imageUrl, title, price, description }) => {
   return (
     <div style={{ border: "2px solid black" }}>
-      <h2>{props.titulo}</h2>
-      <h2>{props.precio}</h2>
-      <h2>{props.description} </h2>
+      <img src={imageUrl} alt="" />
+      <h2>{title}</h2>
+      <h2>{price}</h2>
+      <h2>{description}</h2>
+      <Button color="success" variant="contained" loading={true}>
+        Ver detalle
+      </Button>
+
+      <button className="bg-red mt-2 font-2rem "></button>
     </div>
   );
 };
-
-// const sumar = (a, b, c )=>{
-
-// }
-// sumar( 1, 5, 7 )
-// sumar( 3, 5, 7 )
-// sumar( 5, 5, 7 )
-// sumar( 4, 5, 7 )
