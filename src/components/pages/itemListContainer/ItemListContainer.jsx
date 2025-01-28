@@ -2,17 +2,28 @@ import { useState } from "react";
 import { products } from "../../../products";
 import { ProductCard } from "../../common/productCard/ProductCard";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const ItemListContainer = () => {
   // simular una peticion que me devuelva los productos
   const [items, setItems] = useState([]);
+  const { name } = useParams();
 
   useEffect(() => {
-    console.log("soy el effect");
+    // let productsFiltered;
+    // if (name) {
+    //   productsFiltered = products.filter(
+    //     (elemento) => elemento.category === name
+    //   );
+    // }
+    let productsFiltered = products.filter(
+      (elemento) => elemento.category === name
+    );
+
     const getProducts = new Promise((resolve, reject) => {
       const isLogged = true;
       if (isLogged) {
-        resolve(products);
+        resolve(!name ? products : productsFiltered);
       } else {
         reject({ statusCode: 400, message: "algo salio mal" });
       }
@@ -26,13 +37,10 @@ const ItemListContainer = () => {
         console.log(error);
       })
       .finally(() => {});
-  }, []);
+  }, [name]);
 
-  console.log("no soy el effect");
   return (
-    <div>
-      <h2>Aca van los productos</h2>
-
+    <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
       {items.map((elemento) => {
         return (
           <ProductCard
@@ -43,6 +51,7 @@ const ItemListContainer = () => {
             description={elemento.description}
             stock={elemento.stock}
             category={elemento.category}
+            id={elemento.id}
             // {...elemento}
           />
         );
