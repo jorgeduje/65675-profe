@@ -2,11 +2,14 @@ import "./navbar.css";
 
 import logo from "../../../assets/image-logo.png";
 import { CartWidget } from "../../common/cartWidget/CartWidget";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
     <nav className="navbar-container">
-      <img src={logo} alt="" />
+      <Link to="/">
+        <img src={logo} alt="" />
+      </Link>
       <ul
         style={{
           display: "flex",
@@ -14,9 +17,13 @@ export const Navbar = () => {
           gap: "20px",
         }}
       >
-        <li style={{ listStyle: "none" }}>Todas</li>
-        <li style={{ listStyle: "none" }}>Urbanas</li>
-        <li style={{ listStyle: "none" }}>Deportivas</li>
+        {/* <Link style={{ listStyle: "none" }}>Todas</Link> */}
+        <Link style={{ listStyle: "none" }} to="/category/urbanas">
+          Urbanas
+        </Link>
+        <Link style={{ listStyle: "none" }} to="/category/deportivas">
+          Deportivas
+        </Link>
       </ul>
       <CartWidget />
     </nav>
