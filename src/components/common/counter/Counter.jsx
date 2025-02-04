@@ -1,36 +1,36 @@
-import { useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import "./counter.css";
+import { CartContext } from "../../../context/CartContext";
 
 // 12
-export const Counter = () => {
+export const Counter = ({ item }) => {
   const [contador, setContador] = useState(1); // --> []
-  const [isDark, setIsDark] = useState(false);
+  const { addToCart } = useContext(CartContext);
 
   const sumar = () => {
-    setContador(contador + 1);
+    if (contador < item.stock) {
+      setContador(contador + 1);
+    }
   };
 
   const restar = () => {
-    setContador(contador - 1);
+    if (contador > 1) {
+      setContador(contador - 1);
+    }
   };
 
-  const cambiarModo = () => {
-    setIsDark(!isDark);
-  };
-  console.log(
-    "Se hace una peticion a un servidor en la india FUERA DEL EFFECT"
-  );
+  const onAdd = () => {
+    let objetoParaElCarrito = { ...item, quantity: contador };
 
-  useEffect(() => {
-    console.log("Se hace una peticion a un servidor en la india");
-  }, [isDark]); // array de depencias
+    addToCart(objetoParaElCarrito);
+  };
 
   return (
-    <div className={isDark ? "dark" : "normal"}>
+    <div>
       <button onClick={restar}>Restar</button>
       <h2>contador: {contador} </h2>
       <button onClick={sumar}>Sumar</button>
-      <button onClick={cambiarModo}>cambiar</button>
+      <button onClick={onAdd}>Agregar al carrito </button>
     </div>
   );
 };
