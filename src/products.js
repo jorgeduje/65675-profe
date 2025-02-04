@@ -13,7 +13,7 @@ export let products = [
     id: "2",
     title: "wilson advance",
     price: 14500,
-    stock: 5,
+    stock: 7,
     description: "Ultra livianas y cuentan con camara de aire",
     category: "deportivas",
     imageUrl:
@@ -34,7 +34,7 @@ export let products = [
     id: "4",
     title: "Jaguar",
     price: 17800,
-    stock: 5,
+    stock: 15,
     description: "Zapatillas de ultima generacion para el deporte",
     category: "urbanas",
     imageUrl:
