@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { products } from "../../../products";
+// import { products } from "../../../products";
 import { ProductCard } from "../../common/productCard/ProductCard";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { db } from "../../../firebaseConfig";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 
 const ItemListContainer = () => {
   // simular una peticion que me devuelva los productos
@@ -10,53 +12,68 @@ const ItemListContainer = () => {
   const { name } = useParams();
 
   useEffect(() => {
-    // let productsFiltered;
-    // if (name) {
-    //   productsFiltered = products.filter(
-    //     (elemento) => elemento.category === name
-    //   );
-    // }
-    let productsFiltered = products.filter(
-      (elemento) => elemento.category === name
-    );
+    let productsCollection = collection(db, "products");
+    let consulta = productsCollection;
+    if (name) {
+      let porcionDeLaColeccion = query(
+        productsCollection,
+        where("category", "==", name)
+      );
+      consulta = porcionDeLaColeccion;
+    }
 
-    const getProducts = new Promise((resolve, reject) => {
-      const isLogged = true;
-      if (isLogged) {
-        resolve(!name ? products : productsFiltered);
-      } else {
-        reject({ statusCode: 400, message: "algo salio mal" });
-      }
-    });
-
+    const getProducts = getDocs(consulta);
     getProducts
-      .then((response) => {
-        setItems(response);
+      .then((res) => {
+        const array = res.docs.map((elemento) => {
+          return { id: elemento.id, ...elemento.data() };
+        });
+        setItems(array);
       })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {});
+      .catch((error) => console.log(error));
   }, [name]);
 
+  // const agregarProductos = () => {
+  //   let productsCollection = collection(db, "products");
+
+  //   products.forEach((elemento) => {
+  //     addDoc(productsCollection, elemento);
+  //   });
+  // };
+  // if con return temprano
+  // if (items.length === 0) {
+  //   return (
+  //     <div>
+  //       <h2>cargando..</h2>
+  //     </div>
+  //   );
+  // }
   return (
-    <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-      {items.map((elemento) => {
-        return (
-          <ProductCard
-            key={elemento.id}
-            imageUrl={elemento.imageUrl}
-            title={elemento.title}
-            price={elemento.price}
-            description={elemento.description}
-            stock={elemento.stock}
-            category={elemento.category}
-            id={elemento.id}
-            // {...elemento}
-          />
-        );
-      })}
-    </div>
+    <>
+      {/* <button onClick={agregarProductos}>Agregar productos </button> */}
+      <h1>Aca mis productos</h1>
+      {items.length === 0 ? (
+        <h1>cargando..</h1>
+      ) : (
+        <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          {items.map((elemento) => {
+            return (
+              <ProductCard
+                key={elemento.id}
+                imageUrl={elemento.imageUrl}
+                title={elemento.title}
+                price={elemento.price}
+                description={elemento.description}
+                stock={elemento.stock}
+                category={elemento.category}
+                id={elemento.id}
+                // {...elemento}
+              />
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 };
 
