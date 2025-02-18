@@ -16,4 +16,4 @@ const nombre = "juan";
 
 ![](/public/vite.svg)
 
-[Google](www.google.com)
+[Google](https://www.google.com/)
