@@ -13,7 +13,7 @@ const Checkout = () => {
   });
   const comprar = (evento) => {
     evento.preventDefault();
-    console.log(userInfo);
+
     // creemos una orden de compra en firestore
     let total = getTotalAmount();
     let order = {

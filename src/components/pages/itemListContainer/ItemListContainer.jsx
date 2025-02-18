@@ -4,7 +4,7 @@ import { ProductCard } from "../../common/productCard/ProductCard";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { db } from "../../../firebaseConfig";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const ItemListContainer = () => {
   // simular una peticion que me devuelva los productos
