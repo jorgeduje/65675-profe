@@ -7,3 +7,7 @@
 ```
 npm run dev
 ```
+
+```javascript
+const nombre = "juan";
+```
