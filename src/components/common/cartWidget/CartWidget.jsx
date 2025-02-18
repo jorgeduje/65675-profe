@@ -1,5 +1,5 @@
 import { FaCartShopping } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import "./cartWidget.css";
 import { useContext } from "react";
 import { CartContext } from "../../../context/CartContext";

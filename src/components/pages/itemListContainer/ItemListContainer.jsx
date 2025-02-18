@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { products } from "../../../products";
 import { ProductCard } from "../../common/productCard/ProductCard";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { db } from "../../../firebaseConfig";
 import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 
